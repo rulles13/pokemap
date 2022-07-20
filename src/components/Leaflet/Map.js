@@ -1,19 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-//import { PokemonList } from "../PokemonList";
 import L from "leaflet";
 
 const Map = () => {
     const latitude = 51.505;
     const longitude = -0.09;
+    const [pokes, setPokes] = useState([]);
 
- //   console.log(PokemonList);
+    const pokemonsActifs = () => {
+        let pokemons = [
+            { name: "aspicot", icon: "aspicot.png" },
+            { name: "bellsprout", icon: "bellsprout.png" },
+            { name: "bulbasaur", icon: "bulbasaur.png" },
+            { name: "dratini", icon: "dratini.png" },
+            { name: "evoli", icon: "evoli.png" }
+        ]
+
+        let pokemonList = [];
+        let nbrOfPokemons = 10;
+
+        for (let i = 0; i < nbrOfPokemons; i++) {
+            let x = Math.floor(Math.random() * pokemons.length)
+            pokemonList.push(pokemons[x]);
+        }
+        setPokes(pokemonList);
+    }
+
+    useEffect(() => pokemonsActifs(), []);
+    console.log(pokes);
+
     let dresseurIcon = L.icon({
         iconUrl: "../../dresseurs/dresseur.png",
         iconSize: [50, 50], // size of the icon
         iconAnchor: [25, 50], // point of the icon which will correspond to marker's location
         popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
-      });
+    });
 
     return (
         <MapContainer center={[latitude, longitude]} zoom={13} scrollWheelZoom={true}>
@@ -26,6 +47,24 @@ const Map = () => {
                     C'est moi le meilleur dresseur !
                 </Popup>
             </Marker>
+            {pokes.map((poke) => {
+                let pokeIcon = L.icon({
+                    iconUrl: `../../pokemons/${poke.icon}`,
+                    iconSize: [50, 50],
+                    iconAnchor: [5, 50],
+                    popupAnchor: [-3, -76],
+                });
+                let newLatitude = (latitude + (Math.random() -0.5)*0.1);
+                let newLongitude = (longitude + (Math.random() -0.5)*0.1);
+                return (
+                    <div key={pokes.index}>
+                        <Marker position={[newLatitude, newLongitude]} icon={pokeIcon}>
+
+                        </Marker>
+                    </div>
+                );
+
+            })}
         </MapContainer>
     )
 }
