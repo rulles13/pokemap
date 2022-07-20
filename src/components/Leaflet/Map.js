@@ -13,7 +13,14 @@ const Map = () => {
             { name: "bellsprout", icon: "bellsprout.png" },
             { name: "bulbasaur", icon: "bulbasaur.png" },
             { name: "dratini", icon: "dratini.png" },
-            { name: "evoli", icon: "evoli.png" }
+            { name: "evoli", icon: "evoli.png" },
+            { name: "mankey", icon: "mankey.png" },
+            { name: "miaouss", icon: "miaouss.png" },
+            { name: "miauler", icon: "miauler.png" },
+            { name: "pikachu", icon: "pikachu.png" },
+            { name: "rattata", icon: "rattata.png" },
+            { name: "ronflex", icon: "ronflex.png" },
+            { name: "squirtle", icon: "squirtle.png" }
         ]
 
         let pokemonList = [];
@@ -47,7 +54,7 @@ const Map = () => {
                     C'est moi le meilleur dresseur !
                 </Popup>
             </Marker>
-            {pokes.map((poke) => {
+            {pokes.map((poke, index) => {
                 let pokeIcon = L.icon({
                     iconUrl: `../../pokemons/${poke.icon}`,
                     iconSize: [50, 50],
@@ -56,8 +63,9 @@ const Map = () => {
                 });
                 let newLatitude = (latitude + (Math.random() -0.5)*0.1);
                 let newLongitude = (longitude + (Math.random() -0.5)*0.1);
+            
                 return (
-                    <div key={pokes.index}>
+                    <div key={index}>
                         <Marker position={[newLatitude, newLongitude]} icon={pokeIcon}>
 
                         </Marker>
